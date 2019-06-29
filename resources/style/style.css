@@ -1,0 +1,36 @@
+*{
+	font-family: Arial
+}
+
+.handsontable table > tbody > tr:first-child div, .handsontable table > tbody > tr:first-child label{
+    font-weight: normal;
+}
+.handsontable .htUIClearAll a, .handsontable .htUISelectAll a,
+.handsontable .htFiltersMenuValue .htUIMultipleSelectSearch input{
+	font-size: 16px
+}
+#hot-display-license-info{
+	display: none
+}
+.filterHeader input{
+	background-color: #fff;
+	border: 1px solid #ccc;
+}
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #1976d2;
+}
