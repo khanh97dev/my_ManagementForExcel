@@ -39,7 +39,7 @@ axios.interceptors.response.use(response => {
       router.push({ name: 'login' })
     }
   }
-
+  if (error.response === undefined) return
   error.response.data.message !== undefined && app.$toast.error(error.response.data.message || 'Something went wrong.')
   error.response.data.error !== undefined && app.$toast.error(error.response.data.error || 'Error occurred.')
   return Promise.reject(error)

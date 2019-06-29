@@ -15,6 +15,7 @@
             :hideCol="hideCol"
             :colHeaders="colHeaders"
             :columns="columns"
+            :cells="cells"
             :fixedColumnsLeft="fixedColumnsLeft"
             :columnHeaders="true"
             :colWidths="colWidths"
@@ -48,6 +49,22 @@ export default {
       keyUpload: 0,
       hideCol: "",
       fixedColumnsLeft: 0,
+      cells: function(row, col, prop){
+        let that = this
+        let readOnly = false
+        let getRow = false
+
+        if(col === 35){
+          this.renderer = function(instance, td, row, col, prop, value, cellProperties){
+            let checkVal = instance.getDataAtCell(row, col + 1)
+            if(checkVal) {
+              cellProperties.readOnly = true
+              td.style.backgroundColor = '#FFBFBF'
+            }
+            return td.textContent = value
+          }
+        }
+      },
       colHeaders: [
         "Phiên bản", // 1
         "SKU", // 2
@@ -151,7 +168,7 @@ export default {
         let columns = jsonBangNhapHang.headers.columns
         columns.splice(0, 2);
         vm.columns.push(...columns)
-        
+
         dataBangNhapHang.forEach( (itemBangNhapHang, indexBangNhapHang) => {
           let idItemBangNhapHang = itemBangNhapHang[0];
           data.some( (item, index) => {
