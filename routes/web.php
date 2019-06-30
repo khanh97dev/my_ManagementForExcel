@@ -15,6 +15,7 @@ Route::any('{all}', function () {
     return view('app')->with(
         'app',
         [
+            // change title web
             'title' => 'Shop Đồ Sáng Tạo'
         ]
     );
