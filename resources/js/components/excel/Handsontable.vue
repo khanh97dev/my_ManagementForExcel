@@ -49,7 +49,6 @@
         <hot-table
           full-width
           ref="hot"
-          :key="key"
           :data="data"
           :cells="cells"
           :settings="hotSettings"
@@ -77,11 +76,11 @@
       </div>
     </template>
     <template v-else>
-      <v-container>
-        <div class="text-xs-center">
+      <div class="text-xs-center">
+        <v-container grid-list-xs>
           <v-progress-circular :size="200" color="primary" indeterminate></v-progress-circular>
-        </div>
-      </v-container>
+        </v-container>
+      </div>
     </template>
   </div>
 </template>
@@ -132,7 +131,7 @@ export default {
           }
         },
         // event handsontable
-        afterSetDataAtCell: function(changes) {
+        /* afterSetDataAtCell: function(changes) {
           let Vue = this.rootElement.__vue__;
           Vue.$emit("afterSetDataAtCell", changes);
         },
@@ -160,7 +159,7 @@ export default {
           return Vue.$emit('dblCell', {
             content, col, row
           })
-        }
+        } */
       }
     };
   },
@@ -214,7 +213,7 @@ export default {
     }
   },
   created: function() {
-    this.key += 1;
+    this.key += 1
     if (this.changeTable)
       setTimeout(() => {
         this.data = this.changeTable;

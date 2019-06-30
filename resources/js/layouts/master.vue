@@ -88,7 +88,7 @@
           <span class="hidden-sm-and-down">Đồ sáng tạo</span>
         </v-toolbar-title>
       </v-toolbar>
-      <v-content >
+      <v-content>
         <slot name="content"></slot>
       </v-content>
       <v-btn fab dark color="cyan" style="z-index: 9999" fixed right bottom @click="scrollTop">
@@ -116,7 +116,7 @@ import { log } from 'util';
           if ( window.scrollY != 0 ) {
               window.scrollBy( 0, scrollStep );
           }
-          else clearInterval(scrollInterval); 
+          else clearInterval(scrollInterval);
         },15);
         // return window.scrollTo(0, 0)
       }

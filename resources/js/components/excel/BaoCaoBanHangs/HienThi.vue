@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ThemFileExcel @sendData="fetchData"/>
+    <ThemFileExcel @sendData="fetchData" />
     <v-layout row wrap>
       <v-flex xs12>
         <v-container fluid>
@@ -17,7 +17,7 @@
                 v-if="data"
                 :items="data"
                 :headers="headers"
-								:loading="loading"
+                :loading="loading"
                 class="elevation-1"
                 hide-actions
               >
@@ -76,11 +76,12 @@
     </v-dialog>
   </div>
 </template>
+
 <script>
 export default {
   components: {
     Handsontable: require("../Handsontable.vue").default,
-    ThemFileExcel: require('./ThemFileExcel').default,
+    ThemFileExcel: require("./ThemFileExcel").default
   },
   data: () => ({
     baseURL: "/api/excel/bao-cao-ban-hangs/",
@@ -95,9 +96,17 @@ export default {
     colWidths: "",
     IDitem: "",
     headers: [
-      { text: "#" },
-      { text: "Tên", value: "name" },
-      { text: "Ngày cập nhật", value: "updated_at" }
+      {
+        text: "#"
+      },
+      {
+        text: "Tên",
+        value: "name"
+      },
+      {
+        text: "Ngày cập nhật",
+        value: "updated_at"
+      }
     ]
   }),
   mounted() {
@@ -105,16 +114,18 @@ export default {
   },
   methods: {
     fetchData() {
-      this.loading = true
+      this.loading = true;
       axios.post(this.baseURL + "data").then(response => {
-        this.loading = false
-        return (this.data = (response.data).reverse());
+        this.loading = false;
+        return (this.data = response.data.reverse());
       });
     },
     viewItem(object) {
       this.dialog = true;
       let id = (this.IDitem = object.id);
-      let data = { id };
+      let data = {
+        id
+      };
       axios.post(this.baseURL + "data-detail", data).then(response => {
         let data = JSON.parse(response.data.json);
         return this.commitHandsontable(data);
@@ -123,12 +134,7 @@ export default {
     commitHandsontable(val) {
       if (val) {
         let arr = [
-          [
-            "Mã SKU",
-            "Tên sản phẩm",
-            "SL hàng thực bán",
-            "Doanh số",
-          ],
+          ["Mã SKU", "Tên sản phẩm", "SL hàng thực bán", "Doanh số"],
           [150, 180, 150, 150]
         ];
         this.colFirst = this.colHeaders = arr[0];
@@ -138,19 +144,24 @@ export default {
       this.keyUpload += 1;
     },
     delItem(object) {
-			let id = (this.IDitem = object.id);
-			let name = this.name = object.name;
-			if(confirm('Xóa: '+name)){
-				let data = { id }
-				this.loading = true
-				axios.post(this.baseURL+'delete', data).then( response => {
-					let status = response.data.status
-					if(status){
-						this.data = this.data.filter( item => item.id !== id )
-						this.loading = false
-					}
-				}).catch( err => console.log(err))
-			}
+      let id = (this.IDitem = object.id);
+      let name = (this.name = object.name);
+      if (confirm("Xóa: " + name)) {
+        let data = {
+          id
+        };
+        this.loading = true;
+        axios
+          .post(this.baseURL + "delete", data)
+          .then(response => {
+            let status = response.data.status;
+            if (status) {
+              this.data = this.data.filter(item => item.id !== id);
+              this.loading = false;
+            }
+          })
+          .catch(err => console.log(err));
+      }
     }
   }
 };
