@@ -9,8 +9,13 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::any('{all}', function () {
-    return view('app');
+    return view('app')->with(
+        'app',
+        [
+            'title' => 'Shop Đồ Sáng Tạo'
+        ]
+    );
 })->where(['all' => '.*']);

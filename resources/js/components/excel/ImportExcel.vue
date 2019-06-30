@@ -1,31 +1,5 @@
-<style scope>
-#drop {
-  border: 2px dashed #bbb;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  padding: 25px;
-  text-align: center;
-  font: 20pt bold, "Vollkorn";
-  color: #bbb;
-}
-.dropping {
-  color: #2185d0 !important;
-  border-color: #2185d0 !important;
-}
-</style>
 <template>
-  <div>
-    <div
-      id="drop"
-      :class="isDrop ? 'dropping' : ''"
-      @drop="handleDrop"
-      @dragover="handleDragover"
-      @dragenter="handleDragover"
-      @dragleave="handleDragEnd"
-      @dragend="handleDragEnd"
-    >{{ excel }}</div>
-  </div>
+  <vue-upload @dropSuccess="dropSuccess" />
 </template>
 
 <script>
@@ -85,16 +59,44 @@ export default {
       });
       return result;
     },
+
+    dropSuccess(files) {
+      var vm = this;
+      var data, i, f;
+      var reader = new FileReader(),
+        name = files.name;
+      reader.onload = function(e) {
+        var test;
+        var results,
+          data = e.target.result,
+          fixedData = vm.fixdata(data),
+          workbook = XLSX.read(btoa(fixedData), { type: "base64" }),
+          firstSheetName = workbook.SheetNames[0],
+          worksheet = workbook.Sheets[firstSheetName];
+        vm.state.headers = vm.get_header_row(worksheet);
+        results = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        vm.state.tickets = results;
+      };
+      reader.readAsArrayBuffer(files);
+      setTimeout(function() {
+        this.excel = "Up file thành công";
+        this.isDrop = false;
+        vm.$emit("uploaded", vm.state.tickets);
+      }, 100);
+    },
+
     /** PARSING and DRAGDROP **/
     handleDrop(e) {
       var vm = this;
       var data;
       e.stopPropagation();
       e.preventDefault();
+      console.log(e.dataTransfer.files);
       var files = e.dataTransfer.files,
         i,
         f;
       for (i = 0, f = files[i]; i != files.length; ++i) {
+        console.log(files[i].name);
         var reader = new FileReader(),
           name = f.name;
         reader.onload = function(e) {

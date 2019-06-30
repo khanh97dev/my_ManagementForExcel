@@ -9,7 +9,7 @@
   padding-bottom: 5px;
   box-shadow: 2px 1px #ccc;
 }
-[id*=ht_] div.ht_master.handsontable > div {
+[id*="ht_"] div.ht_master.handsontable > div {
     height: 80px !important;
 }
 .wtHolder {
@@ -93,7 +93,6 @@ export default {
   data: function() {
     return {
       data: "",
-      test:'',  
       key: 0,
       getData: "",
       dataChange: [],
